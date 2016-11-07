@@ -115,7 +115,7 @@ blockquote, blockquote p { line-height: 1.6; color: #6f6f6f; }
   .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
   pre, blockquote { border: 1px solid #999; page-break-inside: avoid; }
   thead { display: table-header-group; }
-  tr, img { page-break-inside: avoid; }
+  img { page-break-inside: avoid; }
   img { max-width: 100% !important; }
   @page { margin: 0.5cm; }
   p, h2, h3, #toctitle, .sidebarblock > .content > .title { orphans: 3; widows: 3; }
@@ -234,7 +234,6 @@ table.pyhltable td.code { padding-left: .75em; padding-right: 0; }
 .highlight.pygments .lineno, table.pyhltable td:not(.code) { color: #999; padding-left: 0; padding-right: .5em; border-right: 1px solid #dddddd; }
 .highlight.pygments .lineno { display: inline-block; margin-right: .25em; }
 table.pyhltable .linenodiv { background-color: transparent !important; padding-right: 0 !important; }
-.quoteblock { margin: 0 0 1.25em; padding: 0.5625em 1.25em 0 1.1875em; border-left: 1px solid #dddddd; }
 .quoteblock blockquote { margin: 0 0 1.25em 0; padding: 0 0 0.5625em 0; border: 0; }
 .quoteblock blockquote > .paragraph:last-child p { margin-bottom: 0; }
 .quoteblock .attribution { margin-top: -.25em; padding-bottom: 0.5625em; font-size: inherit; color: #555555; }
@@ -284,7 +283,7 @@ td.hdlist1, td.hdlist2 { vertical-align: top; }
 .thumb, .th { line-height: 0; display: inline-block; border: solid 4px white; -webkit-box-shadow: 0 0 0 1px #dddddd; box-shadow: 0 0 0 1px #dddddd; }
 .imageblock.left, .imageblock[style*="float: left"] { margin: 0.25em 0.625em 1.25em 0; }
 .imageblock.right, .imageblock[style*="float: right"] { margin: 0.25em 0 1.25em 0.625em; }
-.imageblock > .title { margin-bottom: 0; }
+.imageblock > .title { margin-bottom: 0; text-align: center; font-weight: bold;}
 .imageblock.thumb, .imageblock.th { border-width: 6px; }
 .imageblock.thumb > .title, .imageblock.th > .title { padding: 0 0.125em; }
 .image.left, .image.right { margin-top: 0.25em; margin-bottom: 0.25em; display: inline-block; line-height: 0; }
@@ -410,7 +409,3 @@ span.icon > .fa {
 ins {color: green; background: yellow; text-decoration: none;}
 del {color: red;}
 .docwarning {border: 1px solid #F00; border-radius: 1em; margin: 10px; padding: 10px; text-align: center;}
-
-pre.http {
-   background: #f2f2f2; border-width: 1px; border-style: solid; border-color: #d9d9d9; -webkit-border-radius: 4px; border-radius: 4px; padding: 0.75em 0.75em 0.5em 0.75em; word-wrap: break-word; font-size: 13px; font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;  margin-bottom: 20px;
-}
