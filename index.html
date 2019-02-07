@@ -1177,9 +1177,6 @@ MF-JSON is obedient to the GeoJSON rule not to occur contravention, and new type
 <p>Temporal properties object (see <a href="#tproperties">[tproperties]</a>)</p>
 </li>
 <li>
-<p>Interpolation object (see <a href="#interpoation">[interpoation]</a>)</p>
-</li>
-<li>
 <p>Life span (see <a href="#time">[time]</a>)</p>
 </li>
 <li>
@@ -1187,6 +1184,9 @@ MF-JSON is obedient to the GeoJSON rule not to occur contravention, and new type
 </li>
 <li>
 <p>Properties object (see <a href="#properties">[properties]</a>)</p>
+</li>
+<li>
+<p>Interpolation object (see <a href="#interpolation">[interpolation]</a>)</p>
 </li>
 </ul>
 </div>
@@ -1205,29 +1205,29 @@ An array consists of elements where each element is a value as a JSON <code>null
 </table>
 </div>
 <div class="paragraph">
-<p>In a MF-JSON object, there are three types of members: mandatory, optional, and default.</p>
+<p>In a MF-JSON object, there are three types of members: MANDATORY, OPTIONAL, and DEFAULT.</p>
 </div>
 <div class="hdlist">
 <table>
 <tr>
 <td class="hdlist1">
-mandatory
+MANDATORY
 </td>
 <td class="hdlist2">
-<p>If an object member is mandatory, its value SHOULD NOT be a JSON <code>null</code> value.</p>
+<p>If an object member is <strong>mandatory</strong>, its value SHOULD NOT be a JSON <code>null</code> value.</p>
 </td>
 </tr>
 <tr>
 <td class="hdlist1">
-optional
+OPTIONAL
 </td>
 <td class="hdlist2">
-<p>If an object member is optional and its value is a JSON <code>null</code> value, the member and its value can be excluded from a MF-JSON document.</p>
+<p>If an object member is <strong>optional</strong> and its value is a JSON <code>null</code> value, the member and its value can be excluded from a MF-JSON document.</p>
 </td>
 </tr>
 <tr>
 <td class="hdlist1">
-default
+DEFAULT
 </td>
 <td class="hdlist2">
 <p>If an object member has a <strong>default</strong> value defined in this specification, the pair of member and value can be omitted in a MF-JSON document.</p>
@@ -1641,7 +1641,8 @@ Intuitively a temporal geometry of this type depicts a set of curves in a spatio
 For example, the tacking information by using Light Detection and Ranging (LiDAR) can be shared as a TemporalGeometry object with the <code>"MovingPointCloud"</code> type.</p>
 </li>
 <li>
-<p><strong>MultiMovingPoint</strong>: This type represents a set of temporal geometries whose type is <code>"MovingPoint"</code>.</p>
+<p><strong>MultiMovingPoint</strong>: This type represents a set of temporal geometries whose type is <code>"MovingPoint"</code>.
+A moving feature can have serveral individual temporal trajecotries for different time intervals with different interpolation methods.</p>
 </li>
 <li>
 <p><strong>MultiMovingLineString</strong>: This type represents a set of temporal geometries whose type is <code>"MovingLineString"</code>.</p>
@@ -1658,7 +1659,7 @@ For example, the tacking information by using Light Detection and Ranging (LiDAR
 <li>
 <p>A TemporalGeometry object optionally has a <code>"crs"</code> and <code>"trs"</code> member.
 If an object has no <code>"crs"</code> and <code>"trs"</code> member, then it may acquire the CRS instances of <code>"crs"</code> and <code>"trs"</code> member from upper-level braces of a JSON object.
-If no CRS instance can be so acquired, the default CRSs shall apply to the object. If there is no CRS object for a spatial or temporal coordinate,
+If no CRS instance can be so acquired, the default CRSs shall be applied to the object. If there is no CRS object for a spatial or temporal coordinate,
 it explicitly has a "crs" or "trs" member with a JSON <code>null</code> value.</p>
 </li>
 </ul>
@@ -1686,8 +1687,8 @@ the object SHALL be a TemporalPrimitiveGeometry object with additional memebers 
 <div class="ulist">
 <ul>
 <li>
-<p><code>"datetimes"</code>: The <code>"datetimes"</code> member is mandatory. Its value is a JSON array of instants of time to construct leaf geometries based on its temporal coordinate reference system.
-The array SHALL be a list (sequence) of monotonic increasing instants, having the same number of elements of the <code>"coordinates"</code> value.
+<p><code>"datetimes"</code>: The <code>"datetimes"</code> member is mandatory. Its value is a JSON array of instants of time to construct leaf geometries
+based on its temporal coordinate reference system. The array SHALL be a list (sequence) of monotonic increasing instants, having at least one element.
 It does NOT allow a JSON <code>null</code> vlaue and an empty array.</p>
 <table class="tableblock frame-all grid-all" style="width: 99%;">
 <colgroup>
@@ -1721,7 +1722,9 @@ It does NOT allow a JSON <code>null</code> vlaue and an empty array.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>When the <code>"trs"</code> member has the default temporal CRS (i.e., ISO8601) object, an instant is generally encoded as a a JSON string of ISO 8601:2004 field-based formats using Z (e.g., 2016-09-11T06:10:32Z) or incremental time as the number of milliseconds since midnight (00:00 a.m.) on January 1, 1970 in UTC (e.g., 1465621816590), but others can be used such as:</p>
+<p>When the <code>"trs"</code> member has the default temporal CRS (i.e., ISO8601) object, an instant is generally encoded as a a JSON string
+of <a href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO 8601</a> field-based formats using Z (e.g., 2016-09-11T06:10:32Z) or incremental time as the number of milliseconds
+since midnight (00:00 a.m.) on January 1, 1970 in UTC (e.g., 1465621816590), but others can be used such as:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1754,8 +1757,8 @@ It does NOT allow a JSON <code>null</code> vlaue and an empty array.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>"coordinates"</code>: The <code>"coordinates"</code> member is mandatory. Its value is a JSON array of leaf geometries of a temporal geometry, having at least one element.
-It does NOT allow a JSON <code>null</code> vlaue and an empty array.</p>
+<p><code>"coordinates"</code>: The <code>"coordinates"</code> member is mandatory. Its value is a JSON array as a sequence of leaf geometries of a temporal geometry corresponding
+to each element of the array value of the <code>"datetimes"</code> member. It does NOT allow a JSON <code>null</code> value nor an empty array. Each leaf geometry SHALL have the same number of single positions, except "MovingPointCloud".</p>
 <table class="tableblock frame-all grid-all" style="width: 99%;">
 <colgroup>
 <col style="width: 10%;">
@@ -1825,6 +1828,108 @@ positions are equivalent (they represent equivalent points). For Polygons with m
 </td>
 </tr>
 </table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>"interpolation"</code>: The <code>"interpolation"</code> member is mandatory, and its value SHALL be a case-sensitive string as one of predefined motion curves
+or a URL to get a JSON object to represent parametric motion for the movement of a feature in two- or three-space.
+The value of <code>"interpolation"</code> describes the position \((x, y, z)\) of a moving feature at time \(t\) by using parametric equations.
+When an feature is moving, each of these variables can be expressed in terms of a third or fourth variable called a parameter.
+The two most commonly used parameters are time and distance traveled along the path of motion.
+In general, parametric equations of three-dimensional are represented by any three such functions that depending on the same variable \(t\) as
+\(x = x(t)\), \(y = y(t)\), and \(z = z(t)\).
+In orther words, the point \(P(t)\) is described as</p>
+<div class="stemblock">
+<div class="content">
+\[p(t) = (x(t), y(t), z(t)).\]
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>For example, when a feature continously moves over time and explicitly reports its position at four times as shown in <a href="#mf-interpolation">Figure 8</a>.
+Depending on the parametric equation, the motion can be modelled with different curves in the plan.
+The <code>"interpolation"</code> member allows applications to design a movement function that describes the position at any time using the given set of coordinates.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="mf-interpolation" class="imageblock" style="text-align: center">
+<div class="content">
+<img src="./images/mf-interpolation.png" alt="mf-interpolation" width="65%">
+</div>
+<div class="title">Figure 8. The dynamic motion of a feature on parametized curves</div>
+</div>
+<div class="paragraph">
+<p>In this standard, there are two expressions for the case-sensitive string value of member <code>"interpolation"</code>: the name of a predefined motion curve or a URL to address user-defined parametric curve
+defined on an interval \(I\) of parameter \(t\)-value. See <a href="#interpolation">[interpolation]</a> for the representation of a user-defined parametric curve.
+Given \(n+1\) positions \(\{P_0, P_1, ..., P_n\}\) at times \(\{t_0, t_1, ..., t_n\}\) of the <code>"datetimes"</code> value.,
+a temporal trajectory can be realized by using a predefined parametric curve.
+The type of predefined parametric curves of motion is as follows:</p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><code>Discrete</code> : The positions are NOT connected. The position is valid at an element instant in the <code>"datetimes"</code> value.</p>
+</li>
+<li>
+<p><code>Linear</code> : This method is the default value of the <code>"interpolation"</code>. It connects straight lines between positions.
+The position \(p\) at time \(t\) is calculated from the linear spline interpolation with two positions at two successive instants.
+For this interpolation, the temporal geometry has to more than two elements in the <code>"datetimes"</code> value.</p>
+</li>
+<li>
+<p><code>Linear</code> :</p>
+<table class="tableblock frame-all grid-all" style="width: 99%;">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">a. Discrete <span class="image"><img src="./images/mf-discrete.png" alt="Discrete" width="70%"></span></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">b. Linear <span class="image"><img src="./images/mf-linear.png" alt="Linear" width="70%"></span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">c. Spline</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><span class="image"><img src="./images/spline.png" alt="Spline" width="70%"></span></p></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>For that, the value represents a specific parametric motion in two- or three-space.</p>
+</div>
+<div class="paragraph">
+<p>Because the x, y, and z values depend on an additional parameter (time) that is not a part of the coordinate system,
+kinematic equations are also known as parametric equations.</p>
+</div>
+<div class="paragraph">
+<p>Since all perpendicular directions are orthogonal and since any vector quantity can be resolved into components along these directions, n-dimensional motion can be completely described by n one-dimensional algebraic expressions in n perpendicular directions (where n is any whole number greater than zero).</p>
+</div>
+<div class="paragraph">
+<p>When an object moves with a constant speed at a particular direction at regular intervals of time it&#8217;s known as the uniform motion. For example: a bike moving in a straight line with a constant speed.</p>
+</div>
+<div class="paragraph">
+<p>an GeometricInterpolation object (see <a href="#interpolation">[interpolation]</a>).
+If a TemporalPrimitiveGeometry object has this member, then it is the default GeometricInterpolation object.</p>
+</div>
+<div class="paragraph">
+<p>The unknown position at a particular instant within a time period can be found using the GeometricInterpolation instance.</p>
+</div>
+<div class="paragraph">
+<p><a href="#appendix-b1">[appendix-b1]</a> shows examples of TemporalPrimitiveGeometry instances.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1906,19 +2011,6 @@ The quaternion \(Q\) can then be calculated as follow:</p>
 <div class="content">
 \[[W = cos(\dfrac{\psi}{2})cos(\dfrac{\theta}{2})cos(\dfrac{\phi}{2}) + sin(\dfrac{\psi}{2})sin(\dfrac{\theta}{2})sin(\dfrac{\phi}{2})]\]
 </div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>"interpolation"</code>: The `"interpolation" member is mandatory, and its value SHALL be an GeometricInterpolation object (see <a href="#interpolation">[interpolation]</a>).
-If a TemporalPrimitiveGeometry object has this member, then it is the default GeometricInterpolation object.
-Interpolation is a method of finding new values for any function using the given set of values.
-The unknown position at a particular instant within a time period can be found using the GeometricInterpolation instance.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p><a href="#appendix-b1">[appendix-b1]</a> shows examples of TemporalPrimitiveGeometry instances.</p>
 </div>
 </div>
 <div class="sect3">
