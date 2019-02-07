@@ -1668,7 +1668,8 @@ it explicitly has a "crs" or "trs" member with a JSON <code>null</code> value.</
 <h4 id="tprimitive"><a class="anchor" href="#tprimitive"></a>7.5.1. TemporalPrimitiveGeometry Object</h4>
 <div class="paragraph">
 <p>When a TemporalGeometry object has a <code>"type"</code> member with of of the value of <code>"MovingPoint"</code>, <code>"MovingLineString"</code>, <code>"MovingPolygon"</code>, and <code>"MovingPointCloud"</code>,
-the object SHALL be a TemporalPrimitiveGeometry object with additional memebers named <code>"datetimes"</code>, <code>"coordinates"</code>, <code>"interpolation"</code>, and <code>"orientations"</code>.</p>
+the object SHALL be a TemporalPrimitiveGeometry object with additional memebers named <code>"datetimes"</code>, <code>"coordinates"</code>, <code>"interpolation"</code>, and <code>"orientations"</code>.
+<a href="#appendix-b1">[appendix-b1]</a> shows examples of TemporalPrimitiveGeometry instances.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1707,7 +1708,7 @@ It does NOT allow a JSON <code>null</code> vlaue and an empty array.</p>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">TimeInstant</p></td>
 <td class="tableblock halign-center valign-top" style="background-color: #FFFFFF;"><p class="tableblock">[t1, t2, t3, &#8230;&#8203;]</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><em>a list of monotonic increasing instants</em></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><em>a list of monotonic increasing instants, i.e., \(t1 &lt; t2 &lt; t3 &lt;...\)</em></p></td>
 </tr>
 </tbody>
 </table>
@@ -1838,11 +1839,30 @@ The value of <code>"interpolation"</code> describes the position \((x, y, z)\) o
 When an feature is moving, each of these variables can be expressed in terms of a third or fourth variable called a parameter.
 The two most commonly used parameters are time and distance traveled along the path of motion.
 In general, parametric equations of three-dimensional are represented by any three such functions that depending on the same variable \(t\) as
-\(x = x(t)\), \(y = y(t)\), and \(z = z(t)\).
-In orther words, the point \(P(t)\) is described as</p>
+\(x = x(t)\), \(y = y(t)\), and \(z = z(t)\).</p>
+<div class="paragraph">
+<p>In orther words, the position \(P(t)\) is described as</p>
+</div>
 <div class="stemblock">
 <div class="content">
-\[p(t) = (x(t), y(t), z(t)).\]
+\[P(t) = (x(t), y(t), z(t));\]
+</div>
+</div>
+<div class="paragraph">
+<p>velocity \(v\) is the derivative of position (first derivative of position) with respect to time as follows:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[v(t) = P'(x'(t), y'(t), z'(t));\]
+</div>
+</div>
+<div class="paragraph">
+<p>and
+acceleration \(a\) is the derivative of velocity (second derivative of position) with respect to time as follows:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[a(t) = v'(t) = P''(x''(t), y''(t), z''(t)).\]
 </div>
 </div>
 </li>
@@ -1856,9 +1876,25 @@ In orther words, the point \(P(t)\) is described as</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>For example, when a feature continously moves over time and explicitly reports its position at four times as shown in <a href="#mf-interpolation">Figure 8</a>.
+<p>For example, when a feature continously moves over time but there are only four explicit positions as shown in <a href="#mf-interpolation">Figure 8</a>.
 Depending on the parametric equation, the motion can be modelled with different curves in the plan.
-The <code>"interpolation"</code> member allows applications to design a movement function that describes the position at any time using the given set of coordinates.</p>
+The <code>"interpolation"</code> member allows applications to design a movement function that describes the position at any time using the given set of coordinates and conditions about:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Desired slope,</p>
+</li>
+<li>
+<p>Continuity,</p>
+</li>
+<li>
+<p>Smoothness, and</p>
+</li>
+<li>
+<p>Convexity.</p>
+</li>
+</ul>
 </div>
 </td>
 </tr>
@@ -1871,37 +1907,83 @@ The <code>"interpolation"</code> member allows applications to design a movement
 <div class="title">Figure 8. The dynamic motion of a feature on parametized curves</div>
 </div>
 <div class="paragraph">
-<p>In this standard, there are two expressions for the case-sensitive string value of member <code>"interpolation"</code>: the name of a predefined motion curve or a URL to address user-defined parametric curve
-defined on an interval \(I\) of parameter \(t\)-value. See <a href="#interpolation">[interpolation]</a> for the representation of a user-defined parametric curve.
-Given \(n+1\) positions \(\{P_0, P_1, ..., P_n\}\) at times \(\{t_0, t_1, ..., t_n\}\) of the <code>"datetimes"</code> value.,
-a temporal trajectory can be realized by using a predefined parametric curve.
-The type of predefined parametric curves of motion is as follows:</p>
+<p>Given \((n+1)\) positions \(\{P_0, P_1, ..., P_n\}\) at each time instant in \(T=\{t_0, t_1, ..., t_n\}\)
+with the strictly increasing condition \(t_0 &lt; t_1 &lt; ...&lt; t_n\),
+a temporal trajectory can be realized by \(m\) parametric curves \(\{C_0, C_1, ..., C_m\}\) with a polynomial of low degree,
+where \( 0 \leq m \leq n\).</p>
+</div>
+<div class="paragraph">
+<p>Let \(P_i\), \(P_{i+1}\) be two positions at two consecutive times \(t_i\) and \(t_{i+1}\),
+\(C_i\) a curve to connect between two positions, and \(|T|\) a number of elements of T.
+Given time \(t\) in an open interval \(I=(t_i, t_{i+1})\), i.e., \(t \in I\),
+the position \(P(t)\) is interpolated as:</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[P(t) = C(\hat{t}), \quad  \hat{t} = (t-t_i) / (t_{i+1}-t_i), 0 &lt; \hat{t} &lt; 1.\]
+</div>
+</div>
+<div class="paragraph">
+<p>For reducing the cost of MF-JSON encoding,
+this standard defines six values for parametric curves of motion: <code>"Discrete"</code>, <code>"Step"</code>, <code>"Linear"</code>, <code>"Hermit"</code>, and <code>"CatmullRom"</code>.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p><code>Discrete</code> : The positions are NOT connected. The position is valid at an element instant in the <code>"datetimes"</code> value.</p>
+<p><code>"Discrete"</code> : The positions are NOT connected. i.e., \(C(\hat{t}) = \emptyset\).</p>
 </li>
 <li>
-<p><code>Linear</code> : This method is the default value of the <code>"interpolation"</code>. It connects straight lines between positions.
-The position \(p\) at time \(t\) is calculated from the linear spline interpolation with two positions at two successive instants.
-For this interpolation, the temporal geometry has to more than two elements in the <code>"datetimes"</code> value.</p>
+<p><code>"Step"</code> : It just jumps from one position to the next halfway through. It would be useful for representing an accident or event.
+
+ \[
+  C(\hat{t}) = \begin{cases}
+   P_i   &amp; \quad \text{if } \hat{t} &lt; \text{0.5}\\
+   P_{i+1}  &amp; \quad \text{otherwise}
+ \end{cases}
+ \]
+</p>
 </li>
 <li>
-<p><code>Linear</code> :</p>
+<p><code>"Linear"</code> : This method is the <strong>default</strong> value of the <code>"interpolation"</code> member. It connects straight lines between positions.
+For this interpolation, |T| must be at least two.
+
+ \[
+  C(\hat{t}) = (1-\hat{t})P_i + \hat{t}P_{i+1}
+ \]
+</p>
+</li>
+<li>
+<p><code>"Hermit"</code> :</p>
+</li>
+<li>
+<p><code>"CatmullRom"</code> :</p>
 <table class="tableblock frame-all grid-all" style="width: 99%;">
 <colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
+<col style="width: 12.5%;">
+<col style="width: 37.5%;">
 </colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Names</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Curves</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Names</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Curves</th>
+</tr>
+</thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">a. Discrete <span class="image"><img src="./images/mf-discrete.png" alt="Discrete" width="70%"></span></p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">b. Linear <span class="image"><img src="./images/mf-linear.png" alt="Linear" width="70%"></span></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Step</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><span class="image"><img src="./images/mf-step.png" alt="Step" width="70%"></span></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Linear</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><span class="image"><img src="./images/mf-linear.png" alt="Linear" width="70%"></span></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">c. Spline</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><span class="image"><img src="./images/spline.png" alt="Spline" width="70%"></span></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Hermit</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><span class="image"><img src="./images/mf-hermit.png" alt="Hermit" width="70%"></span></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">CatmullRom</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><span class="image"><img src="./images/mf-catmull.png" alt="CatmullRom" width="70%"></span></p></td>
 </tr>
 </tbody>
 </table>
@@ -1909,27 +1991,9 @@ For this interpolation, the temporal geometry has to more than two elements in t
 </ol>
 </div>
 <div class="paragraph">
-<p>For that, the value represents a specific parametric motion in two- or three-space.</p>
-</div>
-<div class="paragraph">
-<p>Because the x, y, and z values depend on an additional parameter (time) that is not a part of the coordinate system,
-kinematic equations are also known as parametric equations.</p>
-</div>
-<div class="paragraph">
-<p>Since all perpendicular directions are orthogonal and since any vector quantity can be resolved into components along these directions, n-dimensional motion can be completely described by n one-dimensional algebraic expressions in n perpendicular directions (where n is any whole number greater than zero).</p>
-</div>
-<div class="paragraph">
-<p>When an object moves with a constant speed at a particular direction at regular intervals of time it&#8217;s known as the uniform motion. For example: a bike moving in a straight line with a constant speed.</p>
-</div>
-<div class="paragraph">
-<p>an GeometricInterpolation object (see <a href="#interpolation">[interpolation]</a>).
-If a TemporalPrimitiveGeometry object has this member, then it is the default GeometricInterpolation object.</p>
-</div>
-<div class="paragraph">
-<p>The unknown position at a particular instant within a time period can be found using the GeometricInterpolation instance.</p>
-</div>
-<div class="paragraph">
-<p><a href="#appendix-b1">[appendix-b1]</a> shows examples of TemporalPrimitiveGeometry instances.</p>
+<p>If applications need to define their own interpolation methods, the <code>"interpolation"</code> member has a URL to
+address a JSON array of parametric equations defined on a set of intervals of parameter \(t\)-value.
+See <a href="#interpolation">[interpolation]</a> for the representation of a user-defined parametric curve.</p>
 </div>
 <div class="ulist">
 <ul>
