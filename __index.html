@@ -1479,7 +1479,7 @@ whose representation follows the way as described in GeoJSON(2008) and the “tr
 for information interchange. This shall be the primary temporal reference system for use with geographic information.</p>
 </div>
 <div class="paragraph">
-<p>The value of a <code>"crs"</code> and <code>"trs"</code> member</p>
+<p>The vlaue of a <code>"crs"</code> and <code>"trs"</code> member</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1541,8 +1541,13 @@ Suggested values are: "proj4", "ogcwkt", "esriwkt", but others can be used.</p>
 }</code></pre>
 </div>
 </div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Relative links may be used to direct processors to CRS parameters in an auxiliary file</dt>
+</dl>
+</div>
 <div class="listingblock">
-<div class="title">Example 6: Example of a relative linked CRS object with an auxiliary file</div>
+<div class="title">Example 6: Example of a linked CRS object</div>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="javascript">{
     <span class="key"><span class="delimiter">&quot;</span><span class="content">type</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">link</span><span class="delimiter">&quot;</span></span>,
@@ -1602,17 +1607,6 @@ Suggested values are: "proj4", "ogcwkt", "esriwkt", but others can be used.</p>
 i.e., changes of the position. A prism of the set of leaves (MF_PrismGeometry in ISO 19141) or trajectories (MF_TemporalTrajectory in ISO 19141) is realized by
 a TemporalGeometry object modeled as a mapping function from \(t\in time\) to a geometric object \(g\) of Point, LineString, Polygon, MultiPoint,
 MultiLineString, MultiPolygon, or GeometryCollection.</p>
-</div>
-<div class="listingblock">
-<div class="title">Example 7: Common members of a TemporalGeometry Object</div>
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="javascript">    <span class="string"><span class="delimiter">&quot;</span><span class="content">temporalGeometry</span><span class="delimiter">&quot;</span></span>: {
-        <span class="key"><span class="delimiter">&quot;</span><span class="content">type</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span>,   <span class="comment">//(mandatory)</span>
-        ......,
-        <span class="key"><span class="delimiter">&quot;</span><span class="content">crs</span><span class="delimiter">&quot;</span></span> : {...}, <span class="comment">//(default)</span>
-        <span class="key"><span class="delimiter">&quot;</span><span class="content">trs</span><span class="delimiter">&quot;</span></span> : {...}, <span class="comment">//(default)</span>
-    }</code></pre>
-</div>
 </div>
 <div class="ulist">
 <ul>
@@ -1674,31 +1668,29 @@ it explicitly has a "crs" or "trs" member with a JSON <code>null</code> value.</
 <h4 id="tprimitive"><a class="anchor" href="#tprimitive"></a>7.5.1. TemporalPrimitiveGeometry Object</h4>
 <div class="paragraph">
 <p>When a TemporalGeometry object has a <code>"type"</code> member with of of the value of <code>"MovingPoint"</code>, <code>"MovingLineString"</code>, <code>"MovingPolygon"</code>, and <code>"MovingPointCloud"</code>,
-the object SHALL be a TemporalPrimitiveGeometry object with additional members named <code>"datetimes"</code>, <code>"coordinates"</code>, <code>"interpolation"</code>, and <code>"orientations"</code>.
+the object SHALL be a TemporalPrimitiveGeometry object with additional memebers named <code>"datetimes"</code>, <code>"coordinates"</code>, <code>"interpolation"</code>, and <code>"orientations"</code>.
 <a href="#appendix-b1">[appendix-b1]</a> shows examples of TemporalPrimitiveGeometry instances.</p>
 </div>
 <div class="listingblock">
-<div class="title">Example 8: Members of a TemporalPrimitiveGeometry Object</div>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="javascript">{
     <span class="comment">// vbar | as a means to select ONE type.</span>
-    <span class="key"><span class="delimiter">&quot;</span><span class="content">type</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">MovingPoint | MovingLineString | MovingPolygon | MovingPointCloud</span><span class="delimiter">&quot;</span></span>, <span class="comment">//(mandatory)</span>
-    <span class="key"><span class="delimiter">&quot;</span><span class="content">datetimes</span><span class="delimiter">&quot;</span></span> : [...],    <span class="comment">//(mandatory)</span>
-    <span class="key"><span class="delimiter">&quot;</span><span class="content">coordinates</span><span class="delimiter">&quot;</span></span>: [...],   <span class="comment">//(mandatory)</span>
-    <span class="key"><span class="delimiter">&quot;</span><span class="content">interpolation</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span>, <span class="comment">//(mandatory)</span>
-    <span class="key"><span class="delimiter">&quot;</span><span class="content">orientations</span><span class="delimiter">&quot;</span></span>: [...],  <span class="comment">//(optional)</span>
-    <span class="key"><span class="delimiter">&quot;</span><span class="content">trs</span><span class="delimiter">&quot;</span></span>: {}, <span class="comment">//(default)</span>
-    <span class="key"><span class="delimiter">&quot;</span><span class="content">crs</span><span class="delimiter">&quot;</span></span>: {}  <span class="comment">//(default)</span>
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">type</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">MovingPoint | MovingLineString | MovingPolygon | MovingPointCloud</span><span class="delimiter">&quot;</span></span>, <span class="comment">//(MANDATORY)</span>
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">datetimes</span><span class="delimiter">&quot;</span></span> : [...],    <span class="comment">//(MANDATORY)</span>
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">coordinates</span><span class="delimiter">&quot;</span></span>: [...],   <span class="comment">//(MANDATORY)</span>
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">interpolation</span><span class="delimiter">&quot;</span></span>: [...], <span class="comment">//(MANDATORY)</span>
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">orientations</span><span class="delimiter">&quot;</span></span>: [...],  <span class="comment">//(OPTIONAL)</span>
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">trs</span><span class="delimiter">&quot;</span></span>: {}, <span class="comment">//(OPTIONAL)</span>
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">crs</span><span class="delimiter">&quot;</span></span>: {}  <span class="comment">//(OPTIONAL)</span>
 }</code></pre>
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>"datetimes"</code>: The <code>"datetimes"</code> member is mandatory. Its value is a JSON array of
-a sequence of monotonic increasing instants, having at least one element that is not <code>null</code>.
-It does NOT allow a JSON <code>null</code> value. The expression of element instant is based on
-its temporal coordinate reference system.</p>
+<p><code>"datetimes"</code>: The <code>"datetimes"</code> member is mandatory. Its value is a JSON array of instants of time to construct leaf geometries
+based on its temporal coordinate reference system. The array SHALL be a list (sequence) of monotonic increasing instants, having at least one element.
+It does NOT allow a JSON <code>null</code> vlaue and an empty array.</p>
 <table class="tableblock frame-all grid-all" style="width: 99%;">
 <colgroup>
 <col style="width: 10%;">
@@ -1766,10 +1758,8 @@ since midnight (00:00 a.m.) on January 1, 1970 in UTC (e.g., 1465621816590), but
 <div class="ulist">
 <ul>
 <li>
-<p><code>"coordinates"</code>: The <code>"coordinates"</code> member is mandatory. Its value is a JSON array of a sequence
-of leaf geometries of a temporal geometry. It does NOT allow a JSON <code>null</code> value nor an empty array.
-Each leaf geometry corresponds to each instant in the array value of <code>"datetimes"</code> in order.
-The value expression of this member is different depending on the <code>"type"</code> value as follows:</p>
+<p><code>"coordinates"</code>: The <code>"coordinates"</code> member is mandatory. Its value is a JSON array as a sequence of leaf geometries of a temporal geometry corresponding
+to each element of the array value of the <code>"datetimes"</code> member. It does NOT allow a JSON <code>null</code> value nor an empty array. Each leaf geometry SHALL have the same number of single positions, except "MovingPointCloud".</p>
 <table class="tableblock frame-all grid-all" style="width: 99%;">
 <colgroup>
 <col style="width: 10%;">
@@ -1787,23 +1777,23 @@ The value expression of this member is different depending on the <code>"type"</
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">MovingPoint</p></td>
 <td class="tableblock halign-center valign-top" style="background-color: #FFFFFF;"><p class="tableblock">[ [x1,y1(,z1)], [x2,y2(,z2)], &#8230;&#8203; ]</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><em>a list of Point coordinates to construct a 0D leaf geometry (point) corresponding to each instant in order</em></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><em>a list of single positions to construct a point as each leaf at a time instant, increasing time order</em></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">MovingLineString</p></td>
 <td class="tableblock halign-center valign-top" style="background-color: #FFFFFF;"><p class="tableblock">[ [[x11,y11(,z11)], [x12,y12(,z12)], &#8230;&#8203;], [[x21,y21(,z21)], [x22,y22(,z22)], &#8230;&#8203;], &#8230;&#8203; ]</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><em>a list of LineString coordinate arrays to construct a 1D leaf geometry (linestring) corresponding to each instant in order</em></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><em>a list of LineString coordinate arrays to construct a linestring as each leaf at a time instant, increasing time order</em></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">MovingPolygon</p></td>
 <td class="tableblock halign-center valign-top" style="background-color: #FFFFFF;"><p class="tableblock">[ [[[ox11,oy11(,oz11)], [ox12,oy12(,oz12)], &#8230;&#8203;], [[ix11,iy11(,iz11)],[ix12,iy12(,iz12)], &#8230;&#8203;],&#8230;&#8203;], [[[ox21,oy21(,oz21)], [ox22,oy22(,oz22)], &#8230;&#8203;], [[ix21,iy21(,iz21)],[ix22,iy22(,iz22)], &#8230;&#8203;], &#8230;&#8203;], &#8230;&#8203; ]</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><em>a list of Polygon
-coordinate arrays to construct a 2D leaf geometry (polygon) corresponding to each instant in order</em></p></td>
+coordinate arrays to construct a polygon as each leaf at a time instant, increasing time order</em></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">MovingPointCloud</p></td>
 <td class="tableblock halign-center valign-top" style="background-color: #FFFFFF;"><p class="tableblock">[ [[x11,y11(,z11)], [x12,y12(,z12)], &#8230;&#8203;], [[x21,y21(,z21)], [x22,y22(,z22)], &#8230;&#8203;], &#8230;&#8203; ]</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><em>a list of MultiPoint coordinate arrays to construct a set of points as a leaf geometry corresponding to each instant in order</em></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><em>a list of MultiPoint coordinate arrays to construct a set of points as each leaf at a time instant, increasing time order</em></p></td>
 </tr>
 </tbody>
 </table>
@@ -1820,19 +1810,16 @@ coordinate arrays to construct a 2D leaf geometry (polygon) corresponding to eac
 <div class="ulist">
 <ul>
 <li>
-<p>A single position is represented by a JSON array of numbers, which must contain two or more elements.
-The first two elements are longitude/easting (x) and latitude/northing (y), precisely in that order and using decimal numbers.
+<p>A single position is represented by a JSON array of numbers,
+which must contain two or more elements. The first two elements are longitude/easting (x) and latitude/northing (y), precisely in that order and using decimal numbers.
 altitude/elevation (z) MAY be included as an optional third element.</p>
 </li>
 <li>
-<p>A Point coordinate is a single position.</p>
+<p>A LineString coordinate array is expressed as a JSON array of two or more single positions.</p>
 </li>
 <li>
-<p>A LineString coordinate array is expressed as a JSON array of two or more single positions, allowing the same positions.</p>
-</li>
-<li>
-<p>A Polygon coordinate array is expressed as a JSON array of LinearRing coordinate arrays. A LinearRing is closed LineString with 4 or more single positions, allowing the same positions.
-The first and last positions are equivalent (they represent equivalent points). For Polygons with multiple rings, the first must be the exterior ring and any others must be interior rings or holes.</p>
+<p>A Polygon coordinate array is expressed as a JSON array of LinearRing coordinate arrays. A LinearRing is closed LineString with 4 or more single positions. The first and last
+positions are equivalent (they represent equivalent points). For Polygons with multiple rings, the first must be the exterior ring and any others must be interior rings or holes.</p>
 </li>
 <li>
 <p>A MultiPoint coordinate array is a JSON array of single positions.</p>
@@ -1846,14 +1833,12 @@ The first and last positions are equivalent (they represent equivalent points). 
 <div class="ulist">
 <ul>
 <li>
-<p><code>"interpolation"</code>: The <code>"interpolation"</code> member is mandatory and the most important member to represent various types of dynamic movements.
-Its value SHALL be a case-sensitive string as one of predefined motion curves or a URL to get a JSON object of parametric motion for the movement of a feature in two- or three-space.
-It constructs a parametric curve that passes through a set of positions of a moving feature.
-When a feature is moving, each variable (i.e., \(x\), \(y\), \(z\)) of position can be expressed
-in terms of another variable called a parameter. The two most commonly used parameters are time and distance traveled along the path of motion.
-This standard interprets an <code>"interpolation"</code> value as parametric equations with the time parameter.
-In general, parametric equations of 3D movement are represented by
-any three such functions that depending on the same variable \(t\) as
+<p><code>"interpolation"</code>: The <code>"interpolation"</code> member is mandatory, and its value SHALL be a case-sensitive string as one of predefined motion curves
+or a URL to get a JSON object to represent parametric motion for the movement of a feature in two- or three-space.
+The value of <code>"interpolation"</code> describes the position \((x, y, z)\) of a moving feature at time \(t\) by using parametric equations.
+When an feature is moving, each of these variables can be expressed in terms of a third or fourth variable called a parameter.
+The two most commonly used parameters are time and distance traveled along the path of motion.
+In general, parametric equations of three-dimensional are represented by any three such functions that depending on the same variable \(t\) as
 \(x = x(t)\), \(y = y(t)\), and \(z = z(t)\).</p>
 <div class="paragraph">
 <p>In orther words, the position \(P(t)\) is described as</p>
@@ -1868,7 +1853,7 @@ any three such functions that depending on the same variable \(t\) as
 </div>
 <div class="stemblock">
 <div class="content">
-\[V(t) = P'(x'(t), y'(t), z'(t));\]
+\[v(t) = P'(x'(t), y'(t), z'(t));\]
 </div>
 </div>
 <div class="paragraph">
@@ -1877,7 +1862,7 @@ acceleration \(a\) is the derivative of velocity (second derivative of position)
 </div>
 <div class="stemblock">
 <div class="content">
-\[A(t) = V'(t) = P''(x''(t), y''(t), z''(t)).\]
+\[a(t) = v'(t) = P''(x''(t), y''(t), z''(t)).\]
 </div>
 </div>
 </li>
@@ -1891,25 +1876,23 @@ acceleration \(a\) is the derivative of velocity (second derivative of position)
 </td>
 <td class="content">
 <div class="paragraph">
-<p>For example, when a feature continuously moves over time but there are only four explicit positions as shown in <a href="#mf-interpolation">Figure 8</a>.
-Depending on the parametric equation, the path of motion can be modelled with different curves in the plan.
-The <code>"interpolation"</code> member allows applications to design their time-varying positions at any time using few positions and a parametric curve.
-In particular, a parametric curve is associated with parametric continuity to describe the smoothness of of the parameter&#8217;s value with distance along the curve.
-The various order of parametric continuity can be described as follows:</p>
+<p>For example, when a feature continously moves over time but there are only four explicit positions as shown in <a href="#mf-interpolation">Figure 8</a>.
+Depending on the parametric equation, the motion can be modelled with different curves in the plan.
+The <code>"interpolation"</code> member allows applications to design a movement function that describes the position at any time using the given set of coordinates and conditions about:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>\(C^0\): Curves are continuous; zeroth-order parametric continuity.</p>
+<p>Desired slope,</p>
 </li>
 <li>
-<p>\(C^1\): First derivatives are continuous; first-order parametric continuity.</p>
+<p>Continuity,</p>
 </li>
 <li>
-<p>\(C^2\): First and second derivatives are continuous; second-order parametric continuity.</p>
+<p>Smoothness, and</p>
 </li>
 <li>
-<p>\(C^n\): First through \(n\)-th derivatives are continuous.</p>
+<p>Convexity.</p>
 </li>
 </ul>
 </div>
@@ -1923,114 +1906,57 @@ The various order of parametric continuity can be described as follows:</p>
 </div>
 <div class="title">Figure 8. The dynamic motion of a feature on parametized curves</div>
 </div>
-<div class="sect4">
-<h5 id="_predefined_interpolation_curves"><a class="anchor" href="#_predefined_interpolation_curves"></a>Predefined Interpolation Curves</h5>
 <div class="paragraph">
-<p>In order to reduce the encoding cost and the data size, MF-JSON encoding defines five values for
-built-in parametric curves of motion: <code>"Discrete"</code>, <code>"Step"</code>, <code>"Linear"</code>, <code>"Quadratic"</code>, and <code>"Cube"</code>.</p>
+<p>Given \((n+1)\) positions \(\{P_0, P_1, ..., P_n\}\) at each time instant in \(T=\{t_0, t_1, ..., t_n\}\)
+with the strictly increasing condition \(t_0 &lt; t_1 &lt; ...&lt; t_n\),
+a temporal trajectory can be realized by \(m\) parametric curves \(\{C_0, C_1, ..., C_m\}\) with a polynomial of low degree,
+where \( 0 \leq m \leq n\).</p>
 </div>
-<div class="listingblock">
-<div class="title">Example 9: Predefined interpolation curves</div>
+<div class="paragraph">
+<p>Let \(P_i\), \(P_{i+1}\) be two positions at two consecutive times \(t_i\) and \(t_{i+1}\),
+\(C_i\) a curve to connect between two positions, and \(|T|\) a number of elements of T.
+Given time \(t\) in an open interval \(I=(t_i, t_{i+1})\), i.e., \(t \in I\),
+the position \(P(t)\) is interpolated as:</p>
+</div>
+<div class="stemblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="javascript"> <span class="string"><span class="delimiter">&quot;</span><span class="content">temporalGeometry</span><span class="delimiter">&quot;</span></span>: {
-    <span class="key"><span class="delimiter">&quot;</span><span class="content">datetimes</span><span class="delimiter">&quot;</span></span>: [...],  <span class="comment">//T={t_0, t_1, ..., t_n}</span>
-    <span class="key"><span class="delimiter">&quot;</span><span class="content">coordinates</span><span class="delimiter">&quot;</span></span>: [...], <span class="comment">//G={G_0, G_1, ..., G_n}</span>
-    <span class="key"><span class="delimiter">&quot;</span><span class="content">interpolation</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Discrete|Step|Linear|Quadratic|Cube</span><span class="delimiter">&quot;</span></span>, <span class="comment">// vbar | as a means to select ONE.</span>
-    ....
- }</code></pre>
+\[P(t) = C(\hat{t}), \quad  \hat{t} = (t-t_i) / (t_{i+1}-t_i), 0 &lt; \hat{t} &lt; 1.\]
 </div>
 </div>
 <div class="paragraph">
-<p>For these built-in curves, each leaf geometry SHALL have the same structure for the elements in the value array of the <code>"coordinates"</code> member
-and the same number of single positions in the elements, except "MovingPointCloud".
-For example, if a leaf linestring consists of two single positions in a temporal geometry of type <code>"MovingLineString"</code>,
-the other leaves also have two single positions. If a leaf polygon in a temporal geometry of type <code>"MovingPolygon"</code> has
-one interior ring, the others also have one interior ring and the number of positions of rings is same.</p>
-</div>
-<div class="paragraph">
-<p>Given \((n+1)\) leaf geometries \(G=\{G_0, G_1, ..., G_n\}\) at time instants in \(T=\{t_0, t_1, ..., t_n\}\)
-with the strictly increasing condition \(t_0 &lt; t_1 &lt; ...&lt; t_n\) and one-to-one correspondence,
-a temporal geometry \(TG\) can be drawn by a bundle of \(k\) temporal trajectories (i.e., parametric curves with the time parameter)
-\(\{C_0, C_1, ..., C_k\}\), where \(k\) is the number of single positions in any leaf geometry. A temporal trajectory \(C(t)\) is
-drawn for each position in \(P=\{P_0, P_1, ..., P_n\}\) at each time instant in \(T=\{t_0, t_1, ..., t_n\}\) such that
-\(P_i \in G_i\) and \(0 \leq i \leq n\),
-and its curve is realized by \(n\) parametric sub-curves \( \{ SC_{0}, SC_{1}, ..., SC_{(n-1)} \}\) with polynomials of low degree as follows:
-
-\[
-    C(t_0) = P_0, \quad C(t_1) = P_1, \quad ..., \quad C(t_{n})=P_n,\\
-    C(t) = \{SC_{0}, SC_{1}, ..., SC_{(n-1)}\}.
-\]
-</p>
-</div>
-<div class="paragraph">
-<p>Each type of built-in parametric curves interpolates a time-varying position at any time instant \(t\) in the time interval \(I=[t_0, t_n\)] as follows.</p>
+<p>For reducing the cost of MF-JSON encoding,
+this standard defines six values for parametric curves of motion: <code>"Discrete"</code>, <code>"Step"</code>, <code>"Linear"</code>, <code>"Hermit"</code>, and <code>"CatmullRom"</code>.</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p><code>"Discrete"</code> : The positions are NOT connected. The position is valid only at the time instant in \(T\).
-
-\[
-   C(t) = \begin{cases}
-       P(t)  &amp; \quad \text{if } t \in T\\
-       \emptyset &amp; \quad \text{otherwise.}
-   \end{cases}
-\]
-</p>
+<p><code>"Discrete"</code> : The positions are NOT connected. i.e., \(C(\hat{t}) = \emptyset\).</p>
 </li>
 <li>
 <p><code>"Step"</code> : It just jumps from one position to the next halfway through. It would be useful for representing an accident or event.
-This type requires at least two positions, i.e., \(n \geq 1\).
 
  \[
-  \hat{t} = (t-t_{i-1}) / (t_{i}-t_{i-1}) \quad \text{such that} \quad t \in [t_{i-1}, t_{i}], \\
-  C(t) = C(\hat{t}) = \begin{cases}
+  C(\hat{t}) = \begin{cases}
    P_i   &amp; \quad \text{if } \hat{t} &lt; \text{0.5}\\
-   P_{i+1}  &amp; \quad \text{otherwise.}
+   P_{i+1}  &amp; \quad \text{otherwise}
  \end{cases}
  \]
 </p>
 </li>
 <li>
 <p><code>"Linear"</code> : This method is the <strong>default</strong> value of the <code>"interpolation"</code> member. It connects straight lines between positions.
-For this interpolation, this type also requires at least two positions, i.e., \(n \geq 1\).
+For this interpolation, |T| must be at least two.
 
- \[
- \hat{t} = (t-t_{i-1}) / (t_{i}-t_{i-1}) \quad \text{such that} \quad t \in [t_{i-1}, t_{i}], \\
-  C(t) = C(\hat{t}) = (1-\hat{t})P_{i-1} + \hat{t}P_{i}
- \]
-</p>
-</li>
-<li>
-<p><code>"Quadratic"</code>:</p>
-<div class="literalblock">
-<div class="content">
-<pre>$$
- \[</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>   C_i =
-  \]
- $$
- .. `"Cube"` :
-Tangentsare(pk+1–pk–1)/2 for interior control points</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>
  \[
   C(\hat{t}) = (1-\hat{t})P_i + \hat{t}P_{i+1}
  \]
 </p>
-</div>
-<div class="paragraph">
-<p>+</p>
-</div>
+</li>
+<li>
+<p><code>"Hermit"</code> :</p>
+</li>
+<li>
+<p><code>"CatmullRom"</code> :</p>
 <table class="tableblock frame-all grid-all" style="width: 99%;">
 <colgroup>
 <col style="width: 12.5%;">
@@ -2049,20 +1975,20 @@ Tangentsare(pk+1–pk–1)/2 for interior control points</pre>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Step</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><span class="image"><img src="./images/mf-step.png" alt="Step" width="100%"></span></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><span class="image"><img src="./images/mf-step.png" alt="Step" width="70%"></span></p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Linear</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><span class="image"><img src="./images/mf-linear.png" alt="Linear" width="100%"></span></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><span class="image"><img src="./images/mf-linear.png" alt="Linear" width="70%"></span></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Quadratic</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><span class="image"><img src="./images/mf-quadratic.png" alt="Hermit" width="100%"></span></p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Cube</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><span class="image"><img src="./images/mf-cube.png" alt="CatmullRom" width="100%"></span></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Hermit</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><span class="image"><img src="./images/mf-hermit.png" alt="Hermit" width="70%"></span></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">CatmullRom</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><span class="image"><img src="./images/mf-catmull.png" alt="CatmullRom" width="70%"></span></p></td>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>A spline is a piecewise polynomial function whose derivatives satisfy some continuity constraints across curve boundaries.</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
 <p>If applications need to define their own interpolation methods, the <code>"interpolation"</code> member has a URL to
@@ -2148,7 +2074,6 @@ The quaternion \(Q\) can then be calculated as follow:</p>
 <div class="stemblock">
 <div class="content">
 \[[W = cos(\dfrac{\psi}{2})cos(\dfrac{\theta}{2})cos(\dfrac{\phi}{2}) + sin(\dfrac{\psi}{2})sin(\dfrac{\theta}{2})sin(\dfrac{\phi}{2})]\]
-</div>
 </div>
 </div>
 </div>
