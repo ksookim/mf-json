@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.7.1">
+<meta name="generator" content="Asciidoctor 1.5.8">
 <title>OGC Moving Features Encoding Extension - JSON</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <link rel="stylesheet" href="./asciidoctor.css">
@@ -207,7 +207,12 @@
 <ul class="sectlevel3">
 <li><a href="#tprimitive">7.5.1. TemporalPrimitiveGeometry Object</a></li>
 <li><a href="#taggregate">7.5.2. TemporalAggregateGeometry Object</a></li>
-<li><a href="#_requirement_2">7.5.3. Requirement 2</a></li>
+<li><a href="#_geometry_object">7.5.3. Geometry object</a></li>
+<li><a href="#_temporal_properties_object">7.5.4. Temporal properties object</a></li>
+<li><a href="#_life_span_2">7.5.5. Life span</a></li>
+<li><a href="#_bounding_box">7.5.6. Bounding box</a></li>
+<li><a href="#_properties_object">7.5.7. Properties object</a></li>
+<li><a href="#_requirement_2">7.5.8. Requirement 2</a></li>
 </ul>
 </li>
 </ul>
@@ -340,7 +345,7 @@ a set of trajectories as shown in the <a href="#mf-concept">Figure 1</a>.
 A leaf represents the geometry of the moving feature at a particular value of the parameter (e.g., a point in time) and
 a trajectory is a curve that represents the path of a point in the geometry of the moving feature as it moves with respect to the parameter (e.g., time).</p>
 </div>
-<div id="mf-concept" class="imageblock" style="text-align: center">
+<div id="mf-concept" class="imageblock text-center">
 <div class="content">
 <img src="./images/mf-concept.png" alt="Conceptual Moving Feature" width="60%">
 </div>
@@ -946,13 +951,13 @@ Accordingly, MF-JSON is compatible with the GeoJSON encoding.
 </tr>
 </table>
 </div>
-<div id="mf-example" class="imageblock" style="text-align: center">
+<div id="mf-example" class="imageblock text-center">
 <div class="content">
 <img src="./images/mf-example.png" alt="mf-example" width="60%">
 </div>
 <div class="title">Figure 2. Example of a moving feature: a hurricane</div>
 </div>
-<div id="mf-json" class="imageblock" style="text-align: center">
+<div id="mf-json" class="imageblock text-center">
 <div class="content">
 <img src="./images/mf-json.png" alt="mf-json" width="65%">
 </div>
@@ -982,7 +987,7 @@ If there is no member of "crs” and “trs”, it is fixed to the default of Wo
 <p>This encoding standard can represent the movement of the rigid or nonrigid geometry of a feature which may be 0D, 1D, 2D, 3D geometric primitives, or their aggregations.
 <a href="#mf-car">Figure 4</a> shows the movement of a car which has a rigid 3D solid and Example 1 is an example of MF-JSON instances.</p>
 </div>
-<div id="mf-car" class="imageblock" style="text-align: center">
+<div id="mf-car" class="imageblock text-center">
 <div class="content">
 <img src="./images/mf-car.png" alt="mf-car" width="60%">
 </div>
@@ -1092,7 +1097,7 @@ The <strong>MF_PrismGeometry</strong> type represents the movement of an object 
 <strong>MF_RigidTemporalGeometry</strong> specializes MF_PrismGeometry to describe the motion of a rigid body, especially for a 3D object.
 In this document, two new types of <strong>MF_OneParamMeasure</strong> and <strong>MF_TemporalMeasure</strong> are added for representing a one parameter set of values, e.g., timeseries data of a thematic attribute of a feature.</p>
 </div>
-<div id="mf-schema" class="imageblock" style="text-align: center">
+<div id="mf-schema" class="imageblock text-center">
 <div class="content">
 <img src="./images/mf-schema.png" alt="Components" width="95%">
 </div>
@@ -1110,7 +1115,7 @@ depending upon the location within a feature, but does not support the assignmen
 In order to describe an application schema for handling moving features, this document addes ParametericAttributeType to represent the attribute variation with a parameter attributes
 as shown in <a href="#mf-attribute">Figure 6</a>.</p>
 </div>
-<div id="mf-attribute" class="imageblock" style="text-align: center">
+<div id="mf-attribute" class="imageblock text-center">
 <div class="content">
 <img src="./images/mf-attribute.png" alt="Components" width="90%">
 </div>
@@ -1121,7 +1126,7 @@ as shown in <a href="#mf-attribute">Figure 6</a>.</p>
 The temporalGeometry attribute carries the changes of the position of the feature over time and temporalProperties contain feature attributes
 which carry parametric vlaues over time. The next clause will describe how to represent and share the instances of this kind of application schema to handle the moving features by using JSON objects.</p>
 </div>
-<div id="mf-application" class="imageblock" style="text-align: center">
+<div id="mf-application" class="imageblock text-center">
 <div class="content">
 <img src="./images/mf-application.png" alt="Components" width="75%">
 </div>
@@ -1184,9 +1189,6 @@ MF-JSON is obedient to the GeoJSON rule not to occur contravention, and new type
 </li>
 <li>
 <p>Properties object (see <a href="#properties">[properties]</a>)</p>
-</li>
-<li>
-<p>Interpolation object (see <a href="#interpolation">[interpolation]</a>)</p>
 </li>
 </ul>
 </div>
@@ -1917,7 +1919,7 @@ The various order of parametric continuity can be described as follows:</p>
 </tr>
 </table>
 </div>
-<div id="mf-interpolation" class="imageblock" style="text-align: center">
+<div id="mf-interpolation" class="imageblock text-center">
 <div class="content">
 <img src="./images/mf-interpolation.png" alt="mf-interpolation" width="65%">
 </div>
@@ -1926,8 +1928,8 @@ The various order of parametric continuity can be described as follows:</p>
 <div class="sect4">
 <h5 id="_predefined_interpolation_curves"><a class="anchor" href="#_predefined_interpolation_curves"></a>Predefined Interpolation Curves</h5>
 <div class="paragraph">
-<p>In order to reduce the encoding cost and the data size, MF-JSON encoding defines five values for
-built-in parametric curves of motion: <code>"Discrete"</code>, <code>"Step"</code>, <code>"Linear"</code>, <code>"Quadratic"</code>, and <code>"Cube"</code>.</p>
+<p>In order to reduce the encoding cost and the data size, MF-JSON encoding defines five values of built-in parametric curves
+of motion: <code>"Discrete"</code>, <code>"Step"</code>, <code>"Linear"</code>, <code>"Quadratic"</code>, and <code>"Cube"</code>.</p>
 </div>
 <div class="listingblock">
 <div class="title">Example 9: Predefined interpolation curves</div>
@@ -1948,22 +1950,29 @@ the other leaves also have two single positions. If a leaf polygon in a temporal
 one interior ring, the others also have one interior ring and the number of positions of rings is same.</p>
 </div>
 <div class="paragraph">
-<p>Given \((n+1)\) leaf geometries \(G=\{G_0, G_1, ..., G_n\}\) at time instants in \(T=\{t_0, t_1, ..., t_n\}\)
+<p>Given \(N=(n+1)\) leaf geometries \(G=\{G_0, G_1, ..., G_n\}\) at time instants in \(T=\{t_0, t_1, ..., t_n\}\)
 with the strictly increasing condition \(t_0 &lt; t_1 &lt; ...&lt; t_n\) and one-to-one correspondence,
 a temporal geometry \(TG\) can be drawn by a bundle of \(k\) temporal trajectories (i.e., parametric curves with the time parameter)
-\(\{C_0, C_1, ..., C_k\}\), where \(k\) is the number of single positions in any leaf geometry. A temporal trajectory \(C(t)\) is
+\(\{C_0, C_1, ..., C_k\}\), where \(k\) is the number of single positions in any leaf geometry. A temporal trajectory \(C\) is
 drawn for each position in \(P=\{P_0, P_1, ..., P_n\}\) at each time instant in \(T=\{t_0, t_1, ..., t_n\}\) such that
-\(P_i \in G_i\) and \(0 \leq i \leq n\),
-and its curve is realized by \(n\) parametric sub-curves \( \{ SC_{0}, SC_{1}, ..., SC_{(n-1)} \}\) with polynomials of low degree as follows:
-
-\[
-    C(t_0) = P_0, \quad C(t_1) = P_1, \quad ..., \quad C(t_{n})=P_n,\\
-    C(t) = \{SC_{0}, SC_{1}, ..., SC_{(n-1)}\}.
-\]
-</p>
+\(P_i \in G_i\) and \(0 \leq i \leq n\), and its curve is realized by spline interpolation on subintervals.
+Namely, a temporal trajectory is implemented by a set of piecewise low-degree polynomials \(\{ SC_{1}, SC_{2}, ..., SC_{n}\}\)
+whose derivatives satisfy some continuity constraints across sub-curve boundaries.</p>
 </div>
 <div class="paragraph">
-<p>Each type of built-in parametric curves interpolates a time-varying position at any time instant \(t\) in the time interval \(I=[t_0, t_n\)] as follows.</p>
+<p>Each type of built-in parametric curves interpolates a time-varying position \(P(t)\) for any time instant \(t\) in the time interval \(I=[t_0, t_n\)]
+on the temporal trajectory as follows:
+
+\[
+   P(t) = C(t) = \begin{cases}
+       SC_{1}(t),  &amp; \quad t \in [t_0, t_1],\\
+       SC_{2}(t),  &amp; \quad t \in [t_1, t_2],\\
+       ...,\\
+       SC_{n}(t),  &amp; \quad t \in [t_{n-1}, t_n].
+   \end{cases}
+\]
+
+Note that \(C(t_0) = P_0, C(t_1) = P_1,..., C(t_{n})=P_n\).</p>
 </div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
@@ -1971,55 +1980,58 @@ and its curve is realized by \(n\) parametric sub-curves \( \{ SC_{0}, SC_{1}, .
 <p><code>"Discrete"</code> : The positions are NOT connected. The position is valid only at the time instant in \(T\).
 
 \[
-   C(t) = \begin{cases}
-       P(t)  &amp; \quad \text{if } t \in T\\
+   P(t) = \begin{cases}
+       P_i  &amp; \quad \text{if } t = t_i \in T\\
        \emptyset &amp; \quad \text{otherwise.}
    \end{cases}
 \]
 </p>
 </li>
 <li>
-<p><code>"Step"</code> : It just jumps from one position to the next halfway through. It would be useful for representing an accident or event.
-This type requires at least two positions, i.e., \(n \geq 1\).
+<p><code>"Step"</code> : It just jumps from one position to the next halfway through for a subinterval.
+The curve is not countinous but would be useful for representing an accident or event.
+This interpolation requires at least two positions, i.e., \(N \geq 2\).
 
  \[
-  \hat{t} = (t-t_{i-1}) / (t_{i}-t_{i-1}) \quad \text{such that} \quad t \in [t_{i-1}, t_{i}], \\
-  C(t) = C(\hat{t}) = \begin{cases}
-   P_i   &amp; \quad \text{if } \hat{t} &lt; \text{0.5}\\
-   P_{i+1}  &amp; \quad \text{otherwise.}
+  \forall t \in [t_{i-1}, t_{i}]: P(t) = \begin{cases}
+   P_{i-1}  &amp; \quad \text{if } \frac{t-t_{i-1}}{t_{i}-t_{i-1}} &lt; \text{0.5}\\
+   P_{i}  &amp; \quad \text{otherwise.}
  \end{cases}
  \]
 </p>
 </li>
 <li>
-<p><code>"Linear"</code> : This method is the <strong>default</strong> value of the <code>"interpolation"</code> member. It connects straight lines between positions.
-For this interpolation, this type also requires at least two positions, i.e., \(n \geq 1\).
+<p><code>"Linear"</code> : This method is the <strong>default</strong> value of the <code>"interpolation"</code> member. It connects straight lines between positions
+with zeroth-order parametric continuity (\(C^0\)) on interval \(I\). The position with respect to time is constructed
+from linear splines that are two–positions interpolating polynomials. Therefore, this interpolation also requires at least two positions, i.e., \(N \geq 2\).
 
  \[
- \hat{t} = (t-t_{i-1}) / (t_{i}-t_{i-1}) \quad \text{such that} \quad t \in [t_{i-1}, t_{i}], \\
-  C(t) = C(\hat{t}) = (1-\hat{t})P_{i-1} + \hat{t}P_{i}
+  \forall t \in [t_{i-1}, t_{i}]: P(t) = C(t) = SC_{i}(t) = \frac{t-t_{i}}{t_{i-1}-t_{i}}P_{i-1} + \frac{t-t_{i-1}}{t_{i}-t_{i-1}}P_{i}.
  \]
 </p>
 </li>
 <li>
-<p><code>"Quadratic"</code>:</p>
-<div class="literalblock">
-<div class="content">
-<pre>$$
- \[</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>   C_i =
-  \]
- $$
- .. `"Cube"` :
-Tangentsare(pk+1–pk–1)/2 for interior control points</pre>
-</div>
-</div>
+<p><code>"Quadratic"</code>: This method interpolates the position at time \(t\) by using a piecewise quadratic spline on each interval \([t_{i−1}, t_i\)]
+with first-order parametric continuity (\(C^1\)).
+Between consecutive positions, piecewise quadratic splines are constructed from the following parametric equations
+in terms of the time variable:
+
+ \[
+  \forall t \in [t_{i-1}, t_{i}]: P(t) = C(t) = SC_i(t) = a_it^2 + b_it + c_i,\\
+   SC_i(t_{i-1}) = P_{i-1}, \quad SC_i(t_{i}) = P_{i} = SC_{i+1}(t_i),\\
+   P'(t_{i})=V(t_{i})=SC'_i(t_{i})=SC'_{i+1}(t_i), a_0 = 0.
+ \]
+
+It means the curve of a temporal trajctory is countinuous and has continuous first derivative at the positions in \(P\) except two end positons.
+For this interpolation, at least three leaves at paticular times are required, i.e., \(N \geq 3\).</p>
+</li>
+<li>
+<p><code>"Cube"</code> :</p>
 </li>
 </ol>
+</div>
+<div class="paragraph">
+<p>Tangentsare(pk+1–pk–1)/2 for interior control points</p>
 </div>
 <div class="paragraph">
 <p>
@@ -2055,26 +2067,90 @@ Tangentsare(pk+1–pk–1)/2 for interior control points</pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Quadratic</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><span class="image"><img src="./images/mf-quadratic.png" alt="Hermit" width="100%"></span></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><span class="image"><img src="./images/mf-quadratic.png" alt="Quadratic" width="100%"></span></p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Cube</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><span class="image"><img src="./images/mf-cube.png" alt="CatmullRom" width="100%"></span></p></td>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>A spline is a piecewise polynomial function whose derivatives satisfy some continuity constraints across curve boundaries.</p>
 </div>
+<div class="sect4">
+<h5 id="_urls_for_user_defined_parametric_curve"><a class="anchor" href="#_urls_for_user_defined_parametric_curve"></a>URLs for user-defined parametric curve</h5>
 <div class="paragraph">
 <p>If applications need to define their own interpolation methods, the <code>"interpolation"</code> member has a URL to
-address a JSON array of parametric equations defined on a set of intervals of parameter \(t\)-value.
-See <a href="#interpolation">[interpolation]</a> for the representation of a user-defined parametric curve.</p>
+address a JSON array of parametric equations defined on a set of intervals of parameter \(t\)-value.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example 10: User-defined parametric curves</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript"><span class="string"><span class="delimiter">&quot;</span><span class="content">temporalGeometry</span><span class="delimiter">&quot;</span></span>: {
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">datetimes</span><span class="delimiter">&quot;</span></span>: [...],  <span class="comment">//T={t_0, t_1, ..., t_n}</span>
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">coordinates</span><span class="delimiter">&quot;</span></span>: [...], <span class="comment">//G={G_0, G_1, ..., G_n}</span>
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">interpolation</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">http://www.opengis.net/spec/movingfeatures/json/1.0/req/core/temporalGeometry/interpolation/example</span><span class="delimiter">&quot;</span></span>,
+    ....
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The URL indicates a JSON array composing of a JSON object which has two members of <code>"coefficients"</code> and <code>"time"</code>
+to represent a parametric equation within a temporal interval.
+The position \(P(t)\) at time position \(t\) is derived
+from a <code>"coefficients"</code> instance as a multidimensional array of <strong>polynomials</strong> of \((x(t), y(t), z(t))\)
+coordinates during a particular time interval.</p>
+</div>
+<div class="stemblock">
+<div class="content">
+\[[x(t) = a_{n-1}t^{n-1} + a_{n-2}t^{n-2} + ... + a_0t^0]\]
+</div>
+</div>
+<div class="stemblock">
+<div class="content">
+\[[y(t) = b_{n-1}t^{n-1} + b_{n-2}t^{n-2} + ... + b_0t^0]\]
+</div>
+</div>
+<div class="stemblock">
+<div class="content">
+\[[z(t) = c_{n-1}t^{n-1} + c_{n-2}t^{n-2} + ... + c_0t^0]\]
+</div>
+</div>
+<div class="paragraph">
+<p>If a time position does not belong to any time interval of the elements of equations,
+there is no interpolation equations at that time.
+The order of arrays for the interpolation formula of a temporal position SHALL
+follow \(x\) (longitude), \(y\) (latitude), \(z\) (altitude) order.
+The time intervals between any two elements of equations only allows empty or 0-dimensional intersection.
+For compute parametric equations, the time position formatted by a character string of [ISO 8601:2004] is converted into
+a signed 64-bit integer(long) value that represents milliseconds.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example 11: <a href="http://www.opengis.net/spec/movingfeatures/json/1.0/req/core/temporalGeometry/interpolation/example" class="bare">http://www.opengis.net/spec/movingfeatures/json/1.0/req/core/temporalGeometry/interpolation/example</a></div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript">[
+  {
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">coefficients</span><span class="delimiter">&quot;</span></span>: [[<span class="float">1.0</span>, <span class="float">3.0</span>, <span class="float">4.1</span>], [<span class="float">2.0</span>, <span class="float">2.1</span>, <span class="float">3.0</span>]],
+    <span class="comment">// x = 1.0*t^2 + 3.0*t + 4.1 , y = 2.0*t^2 + 2.1*t + 3.0</span>
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">time</span><span class="delimiter">&quot;</span></span>: [<span class="string"><span class="delimiter">&quot;</span><span class="content">2011-07-14T22:01:01Z</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">2011-07-14T23:01:01Z</span><span class="delimiter">&quot;</span></span>]
+  },
+  {
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">coefficients</span><span class="delimiter">&quot;</span></span>: [[<span class="float">4.0</span>, <span class="float">2.0</span>], [<span class="float">1.0</span>, <span class="float">2.0</span>]],
+      <span class="comment">// x = 4.0*t + 2.0 , y = 1.0*t + 2.0</span>
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">time</span><span class="delimiter">&quot;</span></span>: [<span class="string"><span class="delimiter">&quot;</span><span class="content">2011-07-14T23:01:01Z</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">2011-07-15T00:01:01Z</span><span class="delimiter">&quot;</span></span>]
+  },
+  {
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">coefficients</span><span class="delimiter">&quot;</span></span>: [[<span class="string"><span class="delimiter">&quot;</span><span class="content">sin</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">0.0</span><span class="delimiter">&quot;</span></span>], [<span class="string"><span class="delimiter">&quot;</span><span class="content">cos</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">0.0</span><span class="delimiter">&quot;</span></span>]],
+      <span class="comment">// x = sin*t , y = cos*t</span>
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">time</span><span class="delimiter">&quot;</span></span>: [<span class="string"><span class="delimiter">&quot;</span><span class="content">2011-07-15T00:01:01Z</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">2011-07-16T00:01:01Z</span><span class="delimiter">&quot;</span></span>]
+  }
+]</code></pre>
+</div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>"orientations"</code>:  The <code>"orientations"</code> member is optional. Its value is a JSON array as a sequence of transform matrices, having the same number of elements of the <code>"coordinates"</code> value.
- for rotating and scailing
-of the base representation of a member named <code>"geometry"</code>. It allows a JSON <code>null</code> value or an empty array if and only if the <code>"geometry"</code> member has a JSON <code>null</code> value.
+<p><code>"orientations"</code>:  The <code>"orientations"</code> member is optional. Its value is a JSON array as a sequence of transform matrices
+for rotating and scaling of the base representation of a member named <code>"geometry"</code>,
+having the same number of elements of the <code>"datetimes"</code> value.
+It allows a JSON <code>null</code> value or an empty array if and only if the <code>"geometry"</code> member has a JSON <code>null</code> value.
 The combination of the <code>"geometry"</code> and <code>"orientations"</code> members can represent a 3D temporal geometry of the MF_RigidTemporalGeometry type in ISO 19141.
 A transformation matrix is defined by a linear transformation from the local engineering coordinate reference system to a global geographic coordinate reference system.
 A source 3D coordinate, \((x, y, z)\), transforms into a target 3D coordinate, \((x', y', z')\), by using the quaternions and the scaling factors,
@@ -2124,7 +2200,7 @@ defining an axis of rotation in an imaginary spherical space surrounding the mov
 and \(W\) is a scalar representation of the amount of rotation applied around the axis.
 At this point it should be noted that the \(X\), \(Y\) and \(Z\) components of a quaternion are not the same as the components
 of a three-dimensional unit vector, nor is \(W\) a direct representation of a rotation in degree.
-To convert Euler angles to quaternion form, define the angle around the X-axis (roll) as \(\psi\), the Y-axix (pitch) as \(\theta\), and the Z-axis (yaw) as \(\phi\).
+To convert Euler angles to quaternion form, defining the angle around the X-axis (roll) as \(\psi\), the Y-axix (pitch) as \(\theta\), and the Z-axis (yaw) as \(\phi\).
 The quaternion \(Q\) can then be calculated as follow:</p>
 </div>
 </li>
@@ -2149,6 +2225,12 @@ The quaternion \(Q\) can then be calculated as follow:</p>
 <div class="content">
 \[[W = cos(\dfrac{\psi}{2})cos(\dfrac{\theta}{2})cos(\dfrac{\phi}{2}) + sin(\dfrac{\psi}{2})sin(\dfrac{\theta}{2})sin(\dfrac{\phi}{2})]\]
 </div>
+</div>
+<div id="mf-orientation" class="imageblock text-center">
+<div class="content">
+<img src="./images/mf-orientation.png" alt="mf-orientation" width="65%">
+</div>
+<div class="title">Figure 9. The transformation of 3D ridig body by using the orientation matrices.</div>
 </div>
 </div>
 </div>
@@ -2203,7 +2285,205 @@ The leaf geometry at a time position must be an instance of type <code>"Geometry
 </div>
 </div>
 <div class="sect3">
-<h4 id="_requirement_2"><a class="anchor" href="#_requirement_2"></a>7.5.3. Requirement 2</h4>
+<h4 id="_geometry_object"><a class="anchor" href="#_geometry_object"></a>7.5.3. Geometry object</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_temporal_properties_object"><a class="anchor" href="#_temporal_properties_object"></a>7.5.4. Temporal properties object</h4>
+<div class="paragraph">
+<p>A moving feature can have more than zero time-varying properties, such as the velocity of vehicles or the wind speed of hurricanes.
+A temporal property represents a dynamic measure that the result of ascertaining the value of a characteristic of a moving feature that changes over time and/or location.
+Even though the value of temporal property depends on the spatiotemporal location,
+this standard only considers the temporal dependencies of their changes of value.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If a property has a static value, it is represented with the "properties" member as same as GeoJSON.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="json"><span class="key"><span class="delimiter">&quot;</span><span class="content">temporalProperties</span><span class="delimiter">&quot;</span></span>: [
+    {
+        <span class="key"><span class="delimiter">&quot;</span><span class="content">datetimes</span><span class="delimiter">&quot;</span></span>: [<span class="error">.</span><span class="error">.</span><span class="error">.</span>],
+        <span class="key"><span class="delimiter">&quot;</span><span class="content">_property0_</span><span class="delimiter">&quot;</span></span>: { <span class="error">/</span><span class="error">/</span> <span class="error">_</span><span class="error">p</span><span class="error">r</span><span class="error">o</span><span class="error">p</span><span class="error">e</span><span class="error">r</span><span class="error">t</span><span class="error">y</span><span class="integer">0</span><span class="error">_</span> <span class="error">w</span><span class="error">h</span><span class="error">o</span><span class="error">s</span><span class="error">e</span> <span class="error">n</span><span class="error">a</span><span class="error">m</span><span class="error">e</span> <span class="error">i</span><span class="error">s</span> <span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span> <span class="error">b</span><span class="error">y</span> <span class="error">a</span><span class="error">n</span> <span class="error">a</span><span class="error">p</span><span class="error">p</span><span class="error">l</span><span class="error">i</span><span class="error">c</span><span class="error">a</span><span class="error">t</span><span class="error">i</span><span class="error">o</span><span class="error">n</span>
+          <span class="key"><span class="delimiter">&quot;</span><span class="content">type</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">measure|text|image</span><span class="delimiter">&quot;</span></span>,<span class="error">/</span><span class="error">/</span><span class="error">(</span><span class="error">R</span><span class="error">E</span><span class="error">Q</span><span class="error">U</span><span class="error">I</span><span class="error">R</span><span class="error">E</span><span class="error">D</span><span class="error">)</span> <span class="error">a</span> <span class="error">p</span><span class="error">r</span><span class="error">e</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span> <span class="error">s</span><span class="error">t</span><span class="error">r</span><span class="error">i</span><span class="error">n</span><span class="error">g</span>
+          <span class="key"><span class="delimiter">&quot;</span><span class="content">values</span><span class="delimiter">&quot;</span></span>: [<span class="error">.</span><span class="error">.</span><span class="error">.</span>],             <span class="error">/</span><span class="error">/</span><span class="error">(</span><span class="error">R</span><span class="error">E</span><span class="error">Q</span><span class="error">U</span><span class="error">I</span><span class="error">R</span><span class="error">E</span><span class="error">D</span><span class="error">)</span> <span class="error">a</span> <span class="error">J</span><span class="error">S</span><span class="error">O</span><span class="error">N</span> <span class="error">A</span><span class="error">r</span><span class="error">r</span><span class="error">a</span><span class="error">y</span> <span class="error">o</span><span class="error">f</span> <span class="error">v</span><span class="error">a</span><span class="error">l</span><span class="error">u</span><span class="error">e</span><span class="error">s</span>
+          <span class="key"><span class="delimiter">&quot;</span><span class="content">interpolation</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>,         <span class="error">/</span><span class="error">/</span><span class="error">(</span><span class="error">R</span><span class="error">E</span><span class="error">Q</span><span class="error">U</span><span class="error">I</span><span class="error">R</span><span class="error">E</span><span class="error">D</span><span class="error">)</span> <span class="error">a</span> <span class="error">p</span><span class="error">r</span><span class="error">e</span><span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span> <span class="error">s</span><span class="error">t</span><span class="error">r</span><span class="error">i</span><span class="error">n</span><span class="error">g</span>
+          <span class="key"><span class="delimiter">&quot;</span><span class="content">form</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">...</span><span class="delimiter">&quot;</span></span>,               <span class="error">/</span><span class="error">/</span><span class="error">(</span><span class="error">O</span><span class="error">P</span><span class="error">T</span><span class="error">I</span><span class="error">O</span><span class="error">N</span><span class="error">A</span><span class="error">L</span><span class="error">)</span> <span class="error">a</span> <span class="error">s</span><span class="error">y</span><span class="error">m</span><span class="error">b</span><span class="error">o</span><span class="error">l</span> <span class="error">f</span><span class="error">r</span><span class="error">o</span><span class="error">m</span> <span class="error">U</span><span class="error">C</span><span class="error">U</span><span class="error">M</span>
+          <span class="key"><span class="delimiter">&quot;</span><span class="content">description</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">any string</span><span class="delimiter">&quot;</span></span>  <span class="error">/</span><span class="error">/</span><span class="error">(</span><span class="error">O</span><span class="error">P</span><span class="error">T</span><span class="error">I</span><span class="error">O</span><span class="error">N</span><span class="error">A</span><span class="error">L</span><span class="error">)</span> <span class="error">a</span><span class="error">n</span><span class="error">y</span> <span class="error">s</span><span class="error">t</span><span class="error">r</span><span class="error">i</span><span class="error">n</span><span class="error">g</span> <span class="error">c</span><span class="error">o</span><span class="error">n</span><span class="error">t</span><span class="error">e</span><span class="error">n</span><span class="error">t</span> <span class="error">f</span><span class="error">o</span><span class="error">r</span> <span class="error">a</span><span class="error">n</span> <span class="error">a</span><span class="error">p</span><span class="error">p</span><span class="error">l</span><span class="error">i</span><span class="error">c</span><span class="error">a</span><span class="error">t</span><span class="error">i</span><span class="error">o</span><span class="error">n</span>
+        },
+        <span class="key"><span class="delimiter">&quot;</span><span class="content">_property1_</span><span class="delimiter">&quot;</span></span>: { <span class="error">/</span><span class="error">/</span> <span class="error">_</span><span class="error">p</span><span class="error">r</span><span class="error">o</span><span class="error">p</span><span class="error">e</span><span class="error">r</span><span class="error">t</span><span class="error">y</span><span class="integer">1</span><span class="error">_</span> <span class="error">w</span><span class="error">h</span><span class="error">o</span><span class="error">s</span><span class="error">e</span> <span class="error">n</span><span class="error">a</span><span class="error">m</span><span class="error">e</span> <span class="error">i</span><span class="error">s</span> <span class="error">d</span><span class="error">e</span><span class="error">f</span><span class="error">i</span><span class="error">n</span><span class="error">e</span><span class="error">d</span> <span class="error">b</span><span class="error">y</span> <span class="error">a</span><span class="error">n</span> <span class="error">a</span><span class="error">p</span><span class="error">p</span><span class="error">l</span><span class="error">i</span><span class="error">c</span><span class="error">a</span><span class="error">t</span><span class="error">i</span><span class="error">o</span><span class="error">n</span>
+          <span class="error">.</span><span class="error">.</span><span class="error">.</span> <span class="error">/</span><span class="error">/</span> <span class="error">_</span><span class="error">p</span><span class="error">r</span><span class="error">o</span><span class="error">p</span><span class="error">e</span><span class="error">r</span><span class="error">t</span><span class="error">y</span><span class="integer">1</span><span class="error">_</span> <span class="error">h</span><span class="error">a</span><span class="error">s</span> <span class="error">v</span><span class="error">a</span><span class="error">l</span><span class="error">u</span><span class="error">e</span><span class="error">s</span> <span class="error">a</span><span class="error">t</span> <span class="error">t</span><span class="error">h</span><span class="error">e</span> <span class="error">s</span><span class="error">a</span><span class="error">m</span><span class="error">e</span> <span class="error">t</span><span class="error">i</span><span class="error">m</span><span class="error">e</span> <span class="error">i</span><span class="error">n</span><span class="error">s</span><span class="error">t</span><span class="error">a</span><span class="error">n</span><span class="error">t</span><span class="error">s</span> <span class="error">o</span><span class="error">f</span> <span class="error">_</span><span class="error">p</span><span class="error">r</span><span class="error">o</span><span class="error">p</span><span class="error">e</span><span class="error">r</span><span class="error">t</span><span class="error">y</span><span class="integer">0</span><span class="error">_</span>
+        }
+    },{
+        <span class="key"><span class="delimiter">&quot;</span><span class="content">datetimes</span><span class="delimiter">&quot;</span></span> : [<span class="error">.</span><span class="error">.</span><span class="error">.</span>],
+        <span class="key"><span class="delimiter">&quot;</span><span class="content">_property2_</span><span class="delimiter">&quot;</span></span> : { <span class="error">/</span><span class="error">/</span> <span class="error">_</span><span class="error">p</span><span class="error">r</span><span class="error">o</span><span class="error">p</span><span class="error">e</span><span class="error">r</span><span class="error">t</span><span class="error">y</span><span class="integer">2</span><span class="error">_</span> <span class="error">h</span><span class="error">a</span><span class="error">s</span> <span class="error">v</span><span class="error">a</span><span class="error">l</span><span class="error">u</span><span class="error">e</span><span class="error">s</span> <span class="error">a</span><span class="error">t</span> <span class="error">t</span><span class="error">h</span><span class="error">e</span> <span class="error">d</span><span class="error">i</span><span class="error">f</span><span class="error">f</span><span class="error">e</span><span class="error">r</span><span class="error">e</span><span class="error">n</span><span class="error">t</span> <span class="error">t</span><span class="error">i</span><span class="error">m</span><span class="error">e</span> <span class="error">i</span><span class="error">n</span><span class="error">s</span><span class="error">t</span><span class="error">a</span><span class="error">n</span><span class="error">t</span><span class="error">s</span> <span class="error">f</span><span class="error">r</span><span class="error">o</span><span class="error">m</span> <span class="error">_</span><span class="error">p</span><span class="error">r</span><span class="error">o</span><span class="error">p</span><span class="error">e</span><span class="error">r</span><span class="error">t</span><span class="error">y</span><span class="integer">0</span><span class="error">_</span> <span class="error">a</span><span class="error">n</span><span class="error">d</span> <span class="error">_</span><span class="error">p</span><span class="error">r</span><span class="error">o</span><span class="error">p</span><span class="error">e</span><span class="error">r</span><span class="error">t</span><span class="error">y</span><span class="integer">1</span><span class="error">_</span>
+            <span class="error">.</span><span class="error">.</span><span class="error">.</span><span class="error">.</span>
+        },
+        <span class="error">.</span><span class="error">.</span><span class="error">.</span>
+    }
+]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The member named <code>"temporalProperties"</code> has a JSON array whose elements are a collection of
+temporal properties which are ascertained at the same times.
+This member is optional and allows or an empty set or a JSON <code>null</code> value.
+A collection of temporal properties SHALL have one <code>"datetimes"</code> member and
+more than one <em>property</em> member whose name is defined by an application.
+However, the value of the <em>property</em> member SHALL be a JSON object that has the following fields:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>"type"</code>: The <code>"type"</code> member is mandatory and has a string as one of the followings:</p>
+</li>
+</ul>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 99%;">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">type strings</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Descriptions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">measure</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">The <code>"values"</code> member contains any numeric values.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">text</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">The <code>"values"</code> member contains any strings.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">image</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">The <code>"values"</code> member contains Base64 strings converted from images.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="ulist">
+<ul>
+<li>
+<p><code>"values"</code>: The <code>"values"</code> member is madatory and has a JSON array whose element is a string (including null, true and false) or numeric value.
+The number of elements is the same as the "datetimes" ones.
+There is an one-to-one correspondence between the elements of <code>"values"</code> of a <em>property</em> object
+and <code>"datetimes"</code> as a temporal sequence of pairs \((v,t)\),
+where \(v\) is a value of measurement and \(t\) is its sampling time.
+If the values of a temporal property are measured at different times of <code>"datetimes"</code>,
+each SHALL be represented as a new element in the JSON array.</p>
+</li>
+<li>
+<p><code>"interpolation"</code>: The temporal property also needs to define an interpolation method
+like the temporal geometry. This standard defines the following interpolation methods by referring to <a href="http://docs.opengeospatial.org/is/15-042r3/15-042r3.html#75">InterpolationCode</a> defined in <a href="http://docs.opengeospatial.org/is/15-042r3/15-042r3.html">TimeseriesML 1.0</a>.</p>
+</li>
+</ul>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Names</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Descriptions</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Discrete</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Minimum</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Maximum</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Average</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Linear</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Regression</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+</tbody>
+</table>
+<div class="ulist">
+<ul>
+<li>
+<p><code>"form"</code>: The <code>"form"</code> member is optional and has a string as a standard of measurement [ISO 19103:2015] or a URI denoting a unit-of-measure defined in a web resource.
+This member is applied only for a temporal property whose value type is <code>measure</code>.</p>
+</li>
+<li>
+<p><code>"description"</code>: A temporal property can have an optional member to describe a short description.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_life_span_2"><a class="anchor" href="#_life_span_2"></a>7.5.5. Life span</h4>
+<div class="paragraph">
+<p>The temporal boundary is a temporal interval represented by a JSON array having only two time instants to cover all temporal positions in <code>"temporalGeometry"</code> and <code>"temporalProperties"</code>.
+The value of elements is expressed in ISO 8601:2004 and it allows the same values.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example 12: Example of a "time" member on a moving feature</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript">{
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">type</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Feature</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">time</span><span class="delimiter">&quot;</span></span>: [<span class="string"><span class="delimiter">&quot;</span><span class="content">2011-07-14T22:01:01Z</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">2011-07-15T01:11:22Z</span><span class="delimiter">&quot;</span></span>]
+    ....
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_bounding_box"><a class="anchor" href="#_bounding_box"></a>7.5.6. Bounding box</h4>
+<div class="paragraph">
+<p>The representation of the <code>"bbox"</code> member is the same as GeoJSON <a href="https://www.ietf.org/rfc/rfc7946.txt">IETF RFC 7946</a>.
+The value of the <code>"bbox"</code> member MUST be an array of length \(2*n\) where \(n\) is the number of dimensions
+represented in the spatial bounding box to cover a temporal geometry (or the combination of temporal geometry and 3D rigid body) of a moving feature
+or their union in case of "FeatureCollection", with all axes of the most southwesterly point followed by all axes of the more northeasterly point.
+The axes order of a <code>"bbox"</code> value follows the axes order of single position of longitude, latitude, and elevation.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example 13: Example of a 3D "bbox" member on a moving feature</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="javascript">{
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">type</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">Feature</span><span class="delimiter">&quot;</span></span>,
+    <span class="key"><span class="delimiter">&quot;</span><span class="content">bbox</span><span class="delimiter">&quot;</span></span>: [<span class="float">139.757083</span>, <span class="float">35.627483</span>, <span class="float">0.0</span>, <span class="float">139.757716</span>, <span class="float">35.627701</span>, <span class="float">4.5</span>],
+    ....
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_properties_object"><a class="anchor" href="#_properties_object"></a>7.5.7. Properties object</h4>
+<div class="paragraph">
+<p>The value of the <code>"properties"</code> member is a JSON object as same as GeoJSON <a href="https://www.ietf.org/rfc/rfc7946.txt">IETF RFC 7946</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_requirement_2"><a class="anchor" href="#_requirement_2"></a>7.5.8. Requirement 2</h4>
 <div class="paragraph">
 <p>Paragraph - intro text for the requirement.</p>
 </div>
@@ -2433,14 +2713,15 @@ Place other Annex material in sequential annexes beginning with "B" and leave fi
 [1] Unified Code for Units of Measure (UCUM), unitsofmeasure.org
 [2] EPSG Geodetic Parameter Dataset, www.epsg.org
 [3] The GeoJSON Format Specification. 2008, geojson.org
-[4] National Imagery and Mapping Agency, "Department of Defense World Geodetic System 1984: Its Definition and Relationships with Local Geodetic Systems", Third Edition, 1984.</p>
+[4] National Imagery and Mapping Agency, "Department of Defense World Geodetic System 1984: Its Definition and Relationships with Local Geodetic Systems", Third Edition, 1984.
+[5] Rick Parent, Chapter 3 - Interpolating Values, Editor(s): Rick Parent, Computer Animation (Third Edition), Morgan Kaufmann, 2012, Pages 61-109, <a href="https://doi.org/10.1016/B978-0-12-415842-9.00003-4" class="bare">https://doi.org/10.1016/B978-0-12-415842-9.00003-4</a>.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-01-28 04:22:17 JST
+Last updated 2019-01-16 22:34:13 +0900
 </div>
 </div>
 <script type="text/x-mathjax-config">
