@@ -202,9 +202,9 @@
 <li><a href="#mfeaturecollection">7.2.5. MovingFeatureCollection Object</a></li>
 <li><a href="#time">7.2.6. LifeSpan Object</a></li>
 <li><a href="#bbox">BoundingBox Object</a></li>
-<li><a href="#geometry">7.2.7. Geometry Object</a></li>
-<li><a href="#properties">7.2.8. Properties Object</a></li>
-<li><a href="#interpolation">7.2.9. MotionCurve Objects</a></li>
+<li><a href="#geometry">Geometry Object</a></li>
+<li><a href="#properties">7.2.7. Properties Object</a></li>
+<li><a href="#interpolation">7.2.8. MotionCurve Objects</a></li>
 </ul>
 </li>
 </ul>
@@ -2455,22 +2455,17 @@ is the number of dimensions represented in the spatial bounding box.
 The order of values follows the axes order of single position of longitude, latitude, and elevation.
 The expression of an element in the array refers to the default spatial CRS object, i.e., WGS 84.</p>
 </div>
-<div class="listingblock">
-<div class="title">Example 14: Example of a BoundingBox object</div>
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="javascript">[<span class="float">139.757083</span>, <span class="float">35.627483</span>, <span class="float">0.0</span>, <span class="float">139.757716</span>, <span class="float">35.627701</span>, <span class="float">4.5</span>],</code></pre>
 </div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="geometry"><a class="anchor" href="#geometry"></a>7.2.7. Geometry Object</h4>
+<div class="sect3 757083">
+<h4 id="geometry"><a class="anchor" href="#geometry"></a>Geometry Object</h4>
 <div class="paragraph">
+<div class="title">Example 14: Example of a BoundingBox object</div>
 <p>A Geometry object is the same as a GeoJSON Geometry object defined in
 GeoJSON <a href="https://www.ietf.org/rfc/rfc7946.txt">IETF RFC 7946</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="properties"><a class="anchor" href="#properties"></a>7.2.8. Properties Object</h4>
+<h4 id="properties"><a class="anchor" href="#properties"></a>7.2.7. Properties Object</h4>
 <div class="paragraph">
 <p>A Properties object is any JSON object or a JSON null value for
 the "properties" member in a GeoJSON Feature object defined in
@@ -2478,7 +2473,7 @@ GeoJSON <a href="https://www.ietf.org/rfc/rfc7946.txt">IETF RFC 7946</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="interpolation"><a class="anchor" href="#interpolation"></a>7.2.9. MotionCurve Objects</h4>
+<h4 id="interpolation"><a class="anchor" href="#interpolation"></a>7.2.8. MotionCurve Objects</h4>
 <div class="paragraph">
 <p>In MF-JSON Prism, the concept of motion curves is important to represent various types of dynamic movements,
 especially non-linear movements of features.</p>
