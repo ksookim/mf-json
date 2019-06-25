@@ -2664,15 +2664,32 @@ For this interpolation, at least three leaves at particular times are required, 
 <p><code>"Cube"</code> :This method interpolates the position at time \(t\) by
 using a Catmull–Rom (cubic) spline on each interval \([t_{i−1}, t_i\)]
 with first-order parametric continuity (\(C^1\)).
-The Catmull-Rom splines is a method that approximate a set of points (named control points)
-with a smooth polynomial function that is piecewise-defined. One of the properties of the Catmull-Rom spline is that the curve will pass through
-all of the control points.
+The Catmull-Rom splines is a method that approximate a set of positions
+with a smooth polynomial function that is piecewise-defined.
+This interpolation requires at least four positions, i.e., \(N \geq 4\), i.e.,
+position \(P_{i-1}\) and \(P_{i+2}\) are needed
+to calculate the spline between positions \(P_i\) and \(P_{i+1}\).
 Between consecutive positions, Catmull-Rom splines are constructed from the following parametric equations
 in terms of the time variable:
 
-\[
- C(\hat{t}) = (1-\hat{t})P_i + \hat{t}P_{i+1}
-\]
+  \[
+  \forall t \in [t_{i-1}, t_{i}]: P(t) =
+  \begin{bmatrix}
+  t^3 &amp; t^2 &amp; t &amp; 1
+  \end{bmatrix}
+  \begin{bmatrix}
+  -1 &amp; 3 &amp; -3 &amp; 1\\
+  2 &amp; -5 &amp; 4 &amp; -1\\
+  -1 &amp; 0 &amp; 1 &amp; 0\\
+  0 &amp; 2 &amp; 0 &amp; 0\\
+  \end{bmatrix}
+  \begin{bmatrix}
+  P_{i-1}\\
+  P_i\\
+  P_{i+1}\\
+  P_{i+2}
+  \end{bmatrix}
+  \]
 </p>
 </li>
 </ol>
